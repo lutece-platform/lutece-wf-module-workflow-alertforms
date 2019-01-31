@@ -1,0 +1,66 @@
+<#assign idForm = -1>
+<#assign idQuestionDate = -1>
+<#assign idStateAfterDeadline = -1>
+<#assign nbDaysToDate = 0>
+<#assign nIndex = 1>
+<#if config?exists>
+	<#assign idForm = config.idForm>
+	<#assign idQuestionDate = config.idQuestionDate>
+	<#assign idStateAfterDeadline = config.idStateAfterDeadline>
+	<#assign nbDaysToDate = config.nbDaysToDate>
+</#if>
+<fieldset>
+	<legend>#i18n{module.workflow.alert.task_alert_config.title}</legend>
+		<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="idForm">#i18n{module.workflow.alert.task_alert_config.label_task_form} *</label>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				<div class="input-group">
+				<@comboWithParams name="idForm" items=list_forms default_value="${idForm}" additionalParameters="class=\"form-control input-sm\"" />
+				<span class="input-group-btn">
+					<button class="btn btn-primary btn-sm" type="submit" name="apply" value="apply">
+						<i class="glyphicon glyphicon-ok-sign"></i><span class="hidden">&nbsp;#i18n{module.workflow.alert.task_alert_config.label_apply}</span>
+					</button>
+				</span>
+				</div>
+			</div>
+		</div>	
+		<#if retrieval_types?? && retrieval_types?has_content>
+			<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="" class="radio">#i18n{module.workflow.alert.task_alert_config.label_task_retrieval_type} *</label>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					<#list retrieval_types as retrieval_type>
+					<label for="idRetrievalType_${nIndex}" class="radio-inline">
+						<input type="radio" name="idRetrievalType" id="idRetrievalType_${nIndex}" value="${retrieval_type.idType!}" <#if config?? && retrieval_type.idType = config.idRetrievalType>checked="checked"</#if>>
+						&nbsp;${retrieval_type.getTitle( locale )}
+						<#assign nIndex=nIndex+1>
+					</label>
+					</#list>
+				</div>
+			</div>
+		</#if>
+		<#if config?? && config.idRetrievalType = 1 && list_questions_date?? >
+			<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="positionEntryFormDate">#i18n{module.workflow.alert.task_alert_config.label_task_entry_form_date} * </label>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				<@comboWithParams name="idQuestionDate" items=list_questions_date default_value="${idQuestionDate}" additionalParameters="class=\"form-control input-sm\"" />&nbsp;
+				<span class="help-text">#i18n{module.workflow.alert.task_alert_config.label_task_entry_form_date_comment}</span>
+				</div>
+			</div>
+		</#if>
+		<#if list_states?exists>
+			<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="idStateAfterDeadline">#i18n{module.workflow.alert.task_alert_config.label_task_id_state_after_deadline} *</label>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				<@comboWithParams name="idStateAfterDeadline" items=list_states default_value="${idStateAfterDeadline}" additionalParameters="class=\"form-control input-sm\"" />&nbsp;
+				<span class="help-text">#i18n{module.workflow.alert.task_alert_config.label_task_id_state_after_deadline_comment}</span>
+				</div>
+			</div>
+		</#if>
+		<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="nbDaysToDate">#i18n{module.workflow.alert.task_alert_config.label_task_nb_days_to_date} *</label>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				<input type="text" name="nbDaysToDate" maxlength="3" value="${nbDaysToDate}" class="form-control input-sm" />
+				<span class="help-text">#i18n{module.workflow.alert.task_alert_config.label_task_nb_days_to_date_comment}</span>
+			</div>
+		</div>
+</fieldset>
