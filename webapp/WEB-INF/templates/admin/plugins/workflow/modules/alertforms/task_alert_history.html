@@ -1,0 +1,13 @@
+<label>#i18n{module.workflow.alertforms.task.alertTaskHistory.information.title} :</label>
+<br/>
+<#if alert_active??>
+    <#if alert_active>
+        #i18n{module.workflow.alertforms.task.alertTaskHistory.information.in} <b>${days_between!''} #i18n{module.workflow.alertforms.task.alertTaskHistory.information.days}</b><br/>
+        #i18n{module.workflow.alertforms.task.alertTaskHistory.information.resourceWillChangeState} : <br/>
+    <#else>
+        #i18n{module.workflow.alertforms.task.alertTaskHistory.information.resourceHasChangedState} ( #i18n{module.workflow.alertforms.task.alertTaskHistory.information.afterAnAlarm} ${nb_days_alert?abs!''} #i18n{module.workflow.alertforms.task.alertTaskHistory.information.days} ) : <br/>
+    </#if>
+<#else>
+       #i18n{module.workflow.alertforms.task.alertTaskHistory.information.resourceChangeState} : <br/> 
+</#if>
+${state_before.name!''} <i class="fa fa-arrow-right" aria-hidden="true"></i> ${state_after.name!''}
