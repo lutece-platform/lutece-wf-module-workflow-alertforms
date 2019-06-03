@@ -72,6 +72,7 @@ public final class AlertConstants
     public static final String MARK_STATE_AFTER = "state_after";
     public static final String MARK_DAYS_BETWEEN = "days_between";
     public static final String MARK_ALERT_ACTIVE = "alert_active";
+    public static final String MARK_ALERT_EXECUTED = "alert_executed";
     public static final String MARK_NB_DAYS_ALERT = "nb_days_alert";
 
     // PARAMETERS
