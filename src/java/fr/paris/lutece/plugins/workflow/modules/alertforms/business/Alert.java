@@ -46,6 +46,7 @@ public class Alert
     private int _nIdTask;
     private Timestamp _dateReference;
     private boolean _bIsActive;
+    private boolean _bIsExecuted;
 
     /**
      * Set the id resource history
@@ -131,4 +132,19 @@ public class Alert
         _bIsActive = bIsActive;
     }
 
+	/**
+	 * @return the _bIsExecuted
+	 */
+	public boolean isExecuted() {
+		return _bIsExecuted;
+	}
+
+	/**
+	 * @param _bIsExecuted the _bIsExecuted to set
+	 */
+	public void setExecuted(boolean isExecuted) {
+		_bIsExecuted = isExecuted;
+	}
+
+    
 }

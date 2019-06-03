@@ -97,7 +97,7 @@ public class AlertDaemon extends Daemon
             else
             {
                 // If the formresponse is null or the config is null, we remove the alert
-                alertService.desactivateByHistory( alert.getIdResourceHistory( ), alert.getIdTask( ) );
+                alertService.desactivateByHistory( alert.getIdResourceHistory( ), alert.getIdTask( ), false );
             }
         }
 

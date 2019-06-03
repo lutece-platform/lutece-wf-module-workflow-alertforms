@@ -132,9 +132,9 @@ public final class AlertService implements IAlertService
      */
     @Override
     @Transactional( AlertPlugin.BEAN_TRANSACTION_MANAGER )
-    public void desactivateByHistory( int nIdResourceHistory, int nIdTask )
+    public void desactivateByHistory( int nIdResourceHistory, int nIdTask, boolean executed )
     {
-        _alertDAO.desactivateByHistory( nIdResourceHistory, nIdTask, PluginService.getPlugin( AlertPlugin.PLUGIN_NAME ) );
+        _alertDAO.desactivateByHistory( nIdResourceHistory, nIdTask, executed, PluginService.getPlugin( AlertPlugin.PLUGIN_NAME ) );
     }
 
     /**
@@ -391,7 +391,7 @@ public final class AlertService implements IAlertService
                         resourceWorkflow.getExternalParentId( ) );
 
                 // Remove the Alert
-                desactivateByHistory( alert.getIdResourceHistory( ), alert.getIdTask( ) );
+                desactivateByHistory( alert.getIdResourceHistory( ), alert.getIdTask( ), true );
             }
         }
     }

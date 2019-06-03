@@ -78,13 +78,13 @@ public class AlertCleanerDaemon extends Daemon
                     sbLog.append( "\n- Cleaning alert (ID formResponse : " + formResponse.getId( ) + ", ID history : " + alert.getIdResourceHistory( )
                             + ", ID task : " + alert.getIdTask( ) + ")" );
                     // Remove the Alert
-                    alertService.desactivateByHistory( alert.getIdResourceHistory( ), alert.getIdTask( ) );
+                    alertService.desactivateByHistory( alert.getIdResourceHistory( ), alert.getIdTask( ), false );
                 }
             }
             else
             {
                 // If the formResponse is null or the config is null, we remove the alert
-                alertService.desactivateByHistory( alert.getIdResourceHistory( ), alert.getIdTask( ) );
+                alertService.desactivateByHistory( alert.getIdResourceHistory( ), alert.getIdTask( ), false );
             }
         }
 

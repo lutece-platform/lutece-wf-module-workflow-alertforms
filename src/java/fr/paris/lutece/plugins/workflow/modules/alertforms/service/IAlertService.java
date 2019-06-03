@@ -65,7 +65,7 @@ public interface IAlertService
      * @param nIdTask
      *            the id task
      */
-    void desactivateByHistory( int nIdResourceHistory, int nIdTask );
+    void desactivateByHistory( int nIdResourceHistory, int nIdTask, boolean executed );
 
     /**
      * Desactivate an alert by id task
