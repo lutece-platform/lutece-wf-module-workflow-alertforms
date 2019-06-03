@@ -77,7 +77,7 @@ public interface IAlertDAO
      * @param plugin
      *            the plugin
      */
-    void desactivateByHistory( int nIdResourceHistory, int nIdTask, Plugin plugin );
+    void desactivateByHistory( int nIdResourceHistory, int nIdTask, boolean executed, Plugin plugin );
 
     /**
      * Desactivate alert by task

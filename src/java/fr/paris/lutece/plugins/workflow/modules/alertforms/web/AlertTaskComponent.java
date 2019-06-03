@@ -47,7 +47,6 @@ import fr.paris.lutece.plugins.workflowcore.service.state.IStateService;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.util.html.HtmlTemplate;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 
@@ -105,6 +104,10 @@ public class AlertTaskComponent extends NoFormTaskComponent
     public String getDisplayTaskInformation( int nIdHistory, HttpServletRequest request, Locale locale, ITask task )
     {
         Alert alert = _alertService.find( nIdHistory, task.getId( ) );
+        if ( alert == null)
+        {
+        	return "";
+        }
         TaskAlertConfig alertConfig = _taskAlertConfigService.findByPrimaryKey( task.getId( ) );
         ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdHistory );
 
@@ -115,17 +118,15 @@ public class AlertTaskComponent extends NoFormTaskComponent
         model.put( AlertConstants.MARK_STATE_BEFORE, stateBefore );
         model.put( AlertConstants.MARK_STATE_AFTER, stateAfter );
 
-        if ( alert != null )
-        {
-            LocalDateTime ldtRef = alert.getDateReference( ).toLocalDateTime( );
-            LocalDateTime ldtRefAlert = ldtRef.plusDays( alertConfig.getNbDaysToDate( ) );
-            LocalDateTime ldtNow = LocalDateTime.now( );
+		LocalDateTime ldtRef = alert.getDateReference( ).toLocalDateTime( );
+		LocalDateTime ldtRefAlert = ldtRef.plusDays( alertConfig.getNbDaysToDate( ) );
+		LocalDateTime ldtNow = LocalDateTime.now( );
+		
+		Period period = Period.between( ldtNow.toLocalDate( ), ldtRefAlert.toLocalDate( ) );
+		model.put( AlertConstants.MARK_DAYS_BETWEEN, period.getDays( ) );
+		model.put( AlertConstants.MARK_ALERT_ACTIVE, alert.isActive( ) );
+		model.put( AlertConstants.MARK_ALERT_EXECUTED, alert.isExecuted( ) );
 
-            Period period = Period.between( ldtNow.toLocalDate( ), ldtRefAlert.toLocalDate( ) );
-            model.put( AlertConstants.MARK_DAYS_BETWEEN, period.getDays( ) );
-            model.put( AlertConstants.MARK_ALERT_ACTIVE, alert.isActive( ) );
-
-        }
         model.put( AlertConstants.MARK_NB_DAYS_ALERT, alertConfig.getNbDaysToDate( ) );
 
         return AppTemplateService.getTemplate( TEMPLATE_TASK_ALERT_HISTORY, locale, model ).getHtml( );

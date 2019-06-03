@@ -46,12 +46,12 @@ import java.util.List;
  */
 public class AlertDAO implements IAlertDAO
 {
-    private static final String SQL_QUERY_SELECT_BY_PRIMARY_KEY = " SELECT id_history, id_task, reference_date, is_active "
+    private static final String SQL_QUERY_SELECT_BY_PRIMARY_KEY = " SELECT id_history, id_task, reference_date, is_active, is_executed "
             + " FROM task_alert WHERE id_history = ? AND id_task = ?";
-    private static final String SQL_QUERY_INSERT = " INSERT INTO task_alert ( id_history, id_task, reference_date, is_active ) VALUES ( ?,?,?,? ) ";
-    private static final String SQL_QUERY_DELETE_BY_HISTORY = " UPDATE task_alert SET is_active = 0 WHERE id_history = ? AND id_task = ? ";
+    private static final String SQL_QUERY_INSERT = " INSERT INTO task_alert ( id_history, id_task, reference_date, is_active, is_executed ) VALUES ( ?,?,?,?,? ) ";
+    private static final String SQL_QUERY_DELETE_BY_HISTORY = " UPDATE task_alert SET is_active = 0, is_executed = ? WHERE id_history = ? AND id_task = ? ";
     private static final String SQL_QUERY_DELETE_BY_TASK = " DELETE task_alert SET id_active = 0 WHERE id_task = ? ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_history, id_task, reference_date, is_active FROM task_alert ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_history, id_task, reference_date, is_active, is_executed FROM task_alert ";
     private static final String SQL_FILTER_ACTIVE = " WHERE is_active = 1 ";
 
     /**
@@ -68,6 +68,7 @@ public class AlertDAO implements IAlertDAO
         daoUtil.setInt( nIndex++, alertValue.getIdTask( ) );
         daoUtil.setTimestamp( nIndex++, alertValue.getDateReference( ) );
         daoUtil.setBoolean( nIndex++, true );
+        daoUtil.setBoolean( nIndex++, false );
 
         daoUtil.executeUpdate( );
         daoUtil.free( );
@@ -96,6 +97,7 @@ public class AlertDAO implements IAlertDAO
             alert.setIdTask( daoUtil.getInt( nIndex++ ) );
             alert.setDateReference( daoUtil.getTimestamp( nIndex++ ) );
             alert.setActive( daoUtil.getBoolean( nIndex++ ) );
+            alert.setExecuted( daoUtil.getBoolean( nIndex++ ) );
         }
 
         daoUtil.free( );
@@ -107,10 +109,11 @@ public class AlertDAO implements IAlertDAO
      * {@inheritDoc}
      */
     @Override
-    public void desactivateByHistory( int nIdResourceHistory, int nIdTask, Plugin plugin )
+    public void desactivateByHistory( int nIdResourceHistory, int nIdTask, boolean executed, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_BY_HISTORY, plugin );
         int nIndex = 1;
+        daoUtil.setBoolean( nIndex++, executed );
         daoUtil.setInt( nIndex++, nIdResourceHistory );
         daoUtil.setInt( nIndex, nIdTask );
 
@@ -150,6 +153,7 @@ public class AlertDAO implements IAlertDAO
             alert.setIdTask( daoUtil.getInt( nIndex++ ) );
             alert.setDateReference( daoUtil.getTimestamp( nIndex++ ) );
             alert.setActive( daoUtil.getBoolean( nIndex++ ) );
+            alert.setExecuted( daoUtil.getBoolean( nIndex++ ) );
             listAlerts.add( alert );
         }
 

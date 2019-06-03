@@ -1,0 +1,1 @@
+ALTER TABLE task_alert ADD is_executed SMALLINT DEFAULT 1 NOT NULL;
