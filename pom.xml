@@ -10,7 +10,7 @@
     <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>module-workflow-alertforms</artifactId>
     <packaging>lutece-plugin</packaging>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <name>Workflow alert module for forms</name>
 
     <repositories>
@@ -65,7 +65,7 @@
         <connection>scm:git:https://github.com/lutece-platform/lutece-wf-module-workflow-alertforms.git</connection>
         <developerConnection>scm:git:https://github.com/lutece-platform/lutece-wf-module-workflow-alertforms.git</developerConnection>
         <url>https://github.com/lutece-platform/lutece-wf-module-workflow-alertforms.git</url>
-      <tag>lutece-wf-module-workflow-alertforms-1.0.1</tag>
+      <tag>HEAD</tag>
   </scm>
     
 </project>
