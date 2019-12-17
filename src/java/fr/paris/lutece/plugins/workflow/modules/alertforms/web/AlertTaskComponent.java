@@ -124,6 +124,8 @@ public class AlertTaskComponent extends NoFormTaskComponent
 		
 		Period period = Period.between( ldtNow.toLocalDate( ), ldtRefAlert.toLocalDate( ) );
 		model.put( AlertConstants.MARK_DAYS_BETWEEN, period.getDays( ) );
+        model.put( AlertConstants.MARK_MONTHS_BETWEEN, period.getMonths( ) );
+        model.put( AlertConstants.MARK_YEARS_BETWEEN, period.getYears( ) );
 		model.put( AlertConstants.MARK_ALERT_ACTIVE, alert.isActive( ) );
 		model.put( AlertConstants.MARK_ALERT_EXECUTED, alert.isExecuted( ) );
 

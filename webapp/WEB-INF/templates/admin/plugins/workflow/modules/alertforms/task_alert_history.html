@@ -1,7 +1,11 @@
 <label>#i18n{module.workflow.alertforms.task.alertTaskHistory.information.title} :</label>
 <br/>
 <#if alert_active>
-    #i18n{module.workflow.alertforms.task.alertTaskHistory.information.in} <b>${days_between!''} #i18n{module.workflow.alertforms.task.alertTaskHistory.information.days}</b><br/>
+    #i18n{module.workflow.alertforms.task.alertTaskHistory.information.in}
+    <b>${years_between!''} #i18n{module.workflow.alertforms.task.alertTaskHistory.information.years}</b>
+    <b>${months_between!''} #i18n{module.workflow.alertforms.task.alertTaskHistory.information.months}</b>
+    <b>${days_between!''} #i18n{module.workflow.alertforms.task.alertTaskHistory.information.days}</b>
+    <br/>
     #i18n{module.workflow.alertforms.task.alertTaskHistory.information.resourceWillChangeState} : <br/>
     ${state_before.name!''} <i class="fa fa-arrow-right" aria-hidden="true"></i> ${state_after.name!''}
 <#else>
