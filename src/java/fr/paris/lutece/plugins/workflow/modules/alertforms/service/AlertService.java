@@ -75,7 +75,7 @@ import java.util.Locale;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.commons.lang3.StringUtils;
-
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -331,6 +331,11 @@ public final class AlertService implements IAlertService
                     config.getIdQuestionDate( ) ).get( 0 );
 
             String strDate = formQuestionResponse.getEntryResponse( ).get( 0 ).getResponseValue( );
+            
+            if( NumberUtils.isDigits( strDate ) ) 
+        	{
+        		return Long.parseLong ( strDate );
+        	}
 
             SimpleDateFormat formatter = new SimpleDateFormat( AppPropertiesService.getProperty( FormsConstants.PROPERTY_EXPORT_FORM_DATE_CREATION_FORMAT ) );
             try
