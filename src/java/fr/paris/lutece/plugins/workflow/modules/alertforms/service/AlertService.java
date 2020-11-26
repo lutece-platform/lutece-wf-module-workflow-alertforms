@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -199,8 +199,8 @@ public final class AlertService implements IAlertService
 
             if ( ( action != null ) && ( action.getStateAfter( ) != null ) )
             {
-                ResourceWorkflow resourceWorkflow = _resourceWorkflowService.findByPrimaryKey( formResponse.getId( ), FormResponse.RESOURCE_TYPE, action
-                        .getWorkflow( ).getId( ) );
+                ResourceWorkflow resourceWorkflow = _resourceWorkflowService.findByPrimaryKey( formResponse.getId( ), FormResponse.RESOURCE_TYPE,
+                        action.getWorkflow( ).getId( ) );
 
                 if ( ( resourceWorkflow != null ) && ( resourceWorkflow.getState( ) != null )
                         && ( resourceWorkflow.getState( ).getId( ) == action.getStateAfter( ).getId( ) ) )
@@ -327,8 +327,8 @@ public final class AlertService implements IAlertService
 
         if ( config != null )
         {
-            FormQuestionResponse formQuestionResponse = FormQuestionResponseHome.findFormQuestionResponseByResponseQuestion( nIdFormResponse,
-                    config.getIdQuestionDate( ) ).get( 0 );
+            FormQuestionResponse formQuestionResponse = FormQuestionResponseHome
+                    .findFormQuestionResponseByResponseQuestion( nIdFormResponse, config.getIdQuestionDate( ) ).get( 0 );
 
             String strDate = formQuestionResponse.getEntryResponse( ).get( 0 ).getResponseValue( );
 
@@ -377,8 +377,8 @@ public final class AlertService implements IAlertService
                 _resourceHistoryService.create( resourceHistory );
 
                 // Update Resource
-                ResourceWorkflow resourceWorkflow = _resourceWorkflowService.findByPrimaryKey( nIdFormResponse, FormResponse.RESOURCE_TYPE, action
-                        .getWorkflow( ).getId( ) );
+                ResourceWorkflow resourceWorkflow = _resourceWorkflowService.findByPrimaryKey( nIdFormResponse, FormResponse.RESOURCE_TYPE,
+                        action.getWorkflow( ).getId( ) );
                 resourceWorkflow.setState( state );
                 _resourceWorkflowService.update( resourceWorkflow );
 
