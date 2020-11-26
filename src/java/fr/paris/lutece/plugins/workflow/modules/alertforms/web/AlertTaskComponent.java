@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2019, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -104,9 +104,9 @@ public class AlertTaskComponent extends NoFormTaskComponent
     public String getDisplayTaskInformation( int nIdHistory, HttpServletRequest request, Locale locale, ITask task )
     {
         Alert alert = _alertService.find( nIdHistory, task.getId( ) );
-        if ( alert == null)
+        if ( alert == null )
         {
-        	return "";
+            return "";
         }
         TaskAlertConfig alertConfig = _taskAlertConfigService.findByPrimaryKey( task.getId( ) );
         ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdHistory );
@@ -118,14 +118,14 @@ public class AlertTaskComponent extends NoFormTaskComponent
         model.put( AlertConstants.MARK_STATE_BEFORE, stateBefore );
         model.put( AlertConstants.MARK_STATE_AFTER, stateAfter );
 
-		LocalDateTime ldtRef = alert.getDateReference( ).toLocalDateTime( );
-		LocalDateTime ldtRefAlert = ldtRef.plusDays( alertConfig.getNbDaysToDate( ) );
-		LocalDateTime ldtNow = LocalDateTime.now( );
-		
-		Period period = Period.between( ldtNow.toLocalDate( ), ldtRefAlert.toLocalDate( ) );
-		model.put( AlertConstants.MARK_DAYS_BETWEEN, period.getDays( ) );
-		model.put( AlertConstants.MARK_ALERT_ACTIVE, alert.isActive( ) );
-		model.put( AlertConstants.MARK_ALERT_EXECUTED, alert.isExecuted( ) );
+        LocalDateTime ldtRef = alert.getDateReference( ).toLocalDateTime( );
+        LocalDateTime ldtRefAlert = ldtRef.plusDays( alertConfig.getNbDaysToDate( ) );
+        LocalDateTime ldtNow = LocalDateTime.now( );
+
+        Period period = Period.between( ldtNow.toLocalDate( ), ldtRefAlert.toLocalDate( ) );
+        model.put( AlertConstants.MARK_DAYS_BETWEEN, period.getDays( ) );
+        model.put( AlertConstants.MARK_ALERT_ACTIVE, alert.isActive( ) );
+        model.put( AlertConstants.MARK_ALERT_EXECUTED, alert.isExecuted( ) );
 
         model.put( AlertConstants.MARK_NB_DAYS_ALERT, alertConfig.getNbDaysToDate( ) );
 

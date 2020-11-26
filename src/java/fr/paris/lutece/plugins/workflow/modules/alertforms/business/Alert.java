@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2019, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -132,19 +132,21 @@ public class Alert
         _bIsActive = bIsActive;
     }
 
-	/**
-	 * @return the _bIsExecuted
-	 */
-	public boolean isExecuted() {
-		return _bIsExecuted;
-	}
+    /**
+     * @return the _bIsExecuted
+     */
+    public boolean isExecuted( )
+    {
+        return _bIsExecuted;
+    }
 
-	/**
-	 * @param _bIsExecuted the _bIsExecuted to set
-	 */
-	public void setExecuted(boolean isExecuted) {
-		_bIsExecuted = isExecuted;
-	}
+    /**
+     * @param _bIsExecuted
+     *            the _bIsExecuted to set
+     */
+    public void setExecuted( boolean isExecuted )
+    {
+        _bIsExecuted = isExecuted;
+    }
 
-    
 }
