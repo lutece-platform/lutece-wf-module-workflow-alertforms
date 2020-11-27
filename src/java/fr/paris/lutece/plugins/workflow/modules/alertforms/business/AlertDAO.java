@@ -163,7 +163,7 @@ public class AlertDAO implements IAlertDAO
 
         return listAlerts;
     }
-    
+
     @Override
     public void deleteByHistory( int nIdResourceHistory, int nIdTask, Plugin plugin )
     {
@@ -172,7 +172,7 @@ public class AlertDAO implements IAlertDAO
             int nIndex = 0;
             daoUtil.setInt( ++nIndex, nIdResourceHistory );
             daoUtil.setInt( ++nIndex, nIdTask );
-            
+
             daoUtil.executeUpdate( );
         }
     }

@@ -191,16 +191,16 @@ public interface IAlertService
      *            the alert
      */
     void doChangeFormResponseState( TaskAlertConfig config, int nIdFormResponse, Alert alert );
-    
+
     /**
-    * Delete alert by history
-    * 
-    * @param nIdResourceHistory
-    *            the History id
-    * @param nIdTask
-    *            the task id
-    * @param plugin
-    *            the plugin
-    */
-   void deleteByHistory( int nIdResourceHistory, int nIdTask );
+     * Delete alert by history
+     * 
+     * @param nIdResourceHistory
+     *            the History id
+     * @param nIdTask
+     *            the task id
+     * @param plugin
+     *            the plugin
+     */
+    void deleteByHistory( int nIdResourceHistory, int nIdTask );
 }

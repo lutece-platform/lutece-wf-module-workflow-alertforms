@@ -97,7 +97,7 @@ public interface IAlertDAO
      * @return a list of active Alert
      */
     List<Alert> selectAllActive( Plugin plugin );
-    
+
     /**
      * Delete alert by history
      * 

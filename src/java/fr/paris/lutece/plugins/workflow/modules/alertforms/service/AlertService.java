@@ -448,7 +448,7 @@ public final class AlertService implements IAlertService
 
         return listEntryTypes;
     }
-    
+
     @Override
     public void deleteByHistory( int nIdResourceHistory, int nIdTask )
     {
