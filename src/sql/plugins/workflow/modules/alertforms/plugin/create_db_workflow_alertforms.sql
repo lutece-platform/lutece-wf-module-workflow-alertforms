@@ -21,5 +21,6 @@ CREATE TABLE task_alert(
   id_task INT DEFAULT 0 NOT NULL,
   reference_date TIMESTAMP DEFAULT NULL NULL,
   is_active SMALLINT DEFAULT 1 NOT NULL,
+  is_executed SMALLINT DEFAULT 1 NOT NULL,
   PRIMARY KEY (id_history, id_task)
 );
