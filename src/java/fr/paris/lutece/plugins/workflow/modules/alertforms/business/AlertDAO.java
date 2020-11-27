@@ -46,11 +46,13 @@ import java.util.List;
  */
 public class AlertDAO implements IAlertDAO
 {
+    public static final String BEAN_NAME = "workflow-alertforms.alertDAO";
     private static final String SQL_QUERY_SELECT_BY_PRIMARY_KEY = " SELECT id_history, id_task, reference_date, is_active, is_executed "
             + " FROM task_alert WHERE id_history = ? AND id_task = ?";
     private static final String SQL_QUERY_INSERT = " INSERT INTO task_alert ( id_history, id_task, reference_date, is_active, is_executed ) VALUES ( ?,?,?,?,? ) ";
-    private static final String SQL_QUERY_DELETE_BY_HISTORY = " UPDATE task_alert SET is_active = 0, is_executed = ? WHERE id_history = ? AND id_task = ? ";
-    private static final String SQL_QUERY_DELETE_BY_TASK = " DELETE task_alert SET id_active = 0 WHERE id_task = ? ";
+    private static final String SQL_QUERY_DELETE_BY_HISTORY = " DELETE FROM task_alert WHERE id_history = ? AND id_task = ? ";
+    private static final String SQL_QUERY_DESACTIVATE_BY_HISTORY = " UPDATE task_alert SET is_active = 0, is_executed = ? WHERE id_history = ? AND id_task = ? ";
+    private static final String SQL_QUERY_DESACTIVATE_BY_TASK = " UPDATE task_alert SET id_active = 0 WHERE id_task = ? ";
     private static final String SQL_QUERY_SELECT_ALL = " SELECT id_history, id_task, reference_date, is_active, is_executed FROM task_alert ";
     private static final String SQL_FILTER_ACTIVE = " WHERE is_active = 1 ";
 
@@ -111,7 +113,7 @@ public class AlertDAO implements IAlertDAO
     @Override
     public void desactivateByHistory( int nIdResourceHistory, int nIdTask, boolean executed, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_BY_HISTORY, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DESACTIVATE_BY_HISTORY, plugin );
         int nIndex = 1;
         daoUtil.setBoolean( nIndex++, executed );
         daoUtil.setInt( nIndex++, nIdResourceHistory );
@@ -127,7 +129,7 @@ public class AlertDAO implements IAlertDAO
     @Override
     public void desactivateByTask( int nIdTask, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_BY_TASK, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DESACTIVATE_BY_TASK, plugin );
         daoUtil.setInt( 1, nIdTask );
         daoUtil.executeUpdate( );
         daoUtil.free( );
@@ -160,5 +162,18 @@ public class AlertDAO implements IAlertDAO
         daoUtil.free( );
 
         return listAlerts;
+    }
+    
+    @Override
+    public void deleteByHistory( int nIdResourceHistory, int nIdTask, Plugin plugin )
+    {
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_BY_HISTORY, plugin ) )
+        {
+            int nIndex = 0;
+            daoUtil.setInt( ++nIndex, nIdResourceHistory );
+            daoUtil.setInt( ++nIndex, nIdTask );
+            
+            daoUtil.executeUpdate( );
+        }
     }
 }

@@ -448,4 +448,10 @@ public final class AlertService implements IAlertService
 
         return listEntryTypes;
     }
+    
+    @Override
+    public void deleteByHistory( int nIdResourceHistory, int nIdTask )
+    {
+        _alertDAO.deleteByHistory( nIdResourceHistory, nIdTask, PluginService.getPlugin( AlertPlugin.PLUGIN_NAME ) );
+    }
 }

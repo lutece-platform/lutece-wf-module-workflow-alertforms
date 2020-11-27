@@ -37,6 +37,7 @@ import fr.paris.lutece.plugins.forms.business.FormResponse;
 import fr.paris.lutece.plugins.forms.business.Question;
 import fr.paris.lutece.plugins.workflow.modules.alertforms.business.Alert;
 import fr.paris.lutece.plugins.workflow.modules.alertforms.business.TaskAlertConfig;
+import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.ReferenceList;
 
 import java.util.List;
@@ -190,4 +191,16 @@ public interface IAlertService
      *            the alert
      */
     void doChangeFormResponseState( TaskAlertConfig config, int nIdFormResponse, Alert alert );
+    
+    /**
+    * Delete alert by history
+    * 
+    * @param nIdResourceHistory
+    *            the History id
+    * @param nIdTask
+    *            the task id
+    * @param plugin
+    *            the plugin
+    */
+   void deleteByHistory( int nIdResourceHistory, int nIdTask );
 }
