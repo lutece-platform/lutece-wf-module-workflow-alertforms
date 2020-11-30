@@ -58,8 +58,7 @@ public class RetrievalTypeFormEntry extends AbstractRetrievalType
     {
         if ( ( config != null ) && ( formResponse != null ) )
         {
-            long lDate = _alertService.getDate( config, formResponse.getId( ), formResponse.getFormId( ) );
-            return lDate;
+            return _alertService.getDate( config, formResponse.getId( ), formResponse.getFormId( ) );
         }
 
         return null;

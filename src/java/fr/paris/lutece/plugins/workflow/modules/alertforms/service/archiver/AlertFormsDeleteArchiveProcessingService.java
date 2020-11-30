@@ -41,7 +41,6 @@ import fr.paris.lutece.plugins.workflow.modules.alertforms.service.IAlertService
 import fr.paris.lutece.plugins.workflow.modules.archive.service.AbstractArchiveProcessingService;
 import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
 import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceWorkflow;
-import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistoryService;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 
 public class AlertFormsDeleteArchiveProcessingService extends AbstractArchiveProcessingService
@@ -50,9 +49,6 @@ public class AlertFormsDeleteArchiveProcessingService extends AbstractArchivePro
     public static final String BEAN_NAME = "workflow-alertforms.alertFormsDeleteArchiveProcessingService";
 
     private static final String TASK_TYPE_ALERT = "taskAlert";
-
-    @Inject
-    private IResourceHistoryService _resourceHistoryService;
 
     @Inject
     private IAlertService _alertService;

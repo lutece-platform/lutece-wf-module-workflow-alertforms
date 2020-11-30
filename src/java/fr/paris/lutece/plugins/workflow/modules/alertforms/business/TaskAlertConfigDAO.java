@@ -58,19 +58,19 @@ public class TaskAlertConfigDAO implements ITaskConfigDAO<TaskAlertConfig>
     @Override
     public synchronized void insert( TaskAlertConfig config )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, AlertPlugin.getPlugin( ) );
-
-        int nIndex = 1;
-
-        daoUtil.setInt( nIndex++, config.getIdTask( ) );
-        daoUtil.setInt( nIndex++, config.getIdForm( ) );
-        daoUtil.setInt( nIndex++, config.getIdStateAfterDeadline( ) );
-        daoUtil.setInt( nIndex++, config.getIdQuestionDate( ) );
-        daoUtil.setInt( nIndex++, config.getNbDaysToDate( ) );
-        daoUtil.setInt( nIndex++, config.getIdRetrievalType( ) );
-
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, AlertPlugin.getPlugin( ) ) )
+        {
+            int nIndex = 0;
+    
+            daoUtil.setInt( ++nIndex, config.getIdTask( ) );
+            daoUtil.setInt( ++nIndex, config.getIdForm( ) );
+            daoUtil.setInt( ++nIndex, config.getIdStateAfterDeadline( ) );
+            daoUtil.setInt( ++nIndex, config.getIdQuestionDate( ) );
+            daoUtil.setInt( ++nIndex, config.getNbDaysToDate( ) );
+            daoUtil.setInt( ++nIndex, config.getIdRetrievalType( ) );
+    
+            daoUtil.executeUpdate( );
+        }
     }
 
     /**
@@ -79,19 +79,19 @@ public class TaskAlertConfigDAO implements ITaskConfigDAO<TaskAlertConfig>
     @Override
     public void store( TaskAlertConfig config )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, AlertPlugin.getPlugin( ) );
-
-        int nIndex = 1;
-
-        daoUtil.setInt( nIndex++, config.getIdForm( ) );
-        daoUtil.setInt( nIndex++, config.getIdStateAfterDeadline( ) );
-        daoUtil.setInt( nIndex++, config.getIdQuestionDate( ) );
-        daoUtil.setInt( nIndex++, config.getNbDaysToDate( ) );
-        daoUtil.setInt( nIndex++, config.getIdRetrievalType( ) );
-
-        daoUtil.setInt( nIndex++, config.getIdTask( ) );
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, AlertPlugin.getPlugin( ) ) )
+        {
+            int nIndex = 0;
+    
+            daoUtil.setInt( ++nIndex, config.getIdForm( ) );
+            daoUtil.setInt( ++nIndex, config.getIdStateAfterDeadline( ) );
+            daoUtil.setInt( ++nIndex, config.getIdQuestionDate( ) );
+            daoUtil.setInt( ++nIndex, config.getNbDaysToDate( ) );
+            daoUtil.setInt( ++nIndex, config.getIdRetrievalType( ) );
+    
+            daoUtil.setInt( ++nIndex, config.getIdTask( ) );
+            daoUtil.executeUpdate( );
+        }
     }
 
     /**
@@ -101,27 +101,23 @@ public class TaskAlertConfigDAO implements ITaskConfigDAO<TaskAlertConfig>
     public TaskAlertConfig load( int nIdTask )
     {
         TaskAlertConfig config = null;
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, AlertPlugin.getPlugin( ) );
-
-        daoUtil.setInt( 1, nIdTask );
-
-        daoUtil.executeQuery( );
-
-        int nIndex = 1;
-
-        if ( daoUtil.next( ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, AlertPlugin.getPlugin( ) ) )
         {
-            config = new TaskAlertConfig( );
-            config.setIdTask( daoUtil.getInt( nIndex++ ) );
-            config.setIdForm( daoUtil.getInt( nIndex++ ) );
-            config.setIdStateAfterDeadline( daoUtil.getInt( nIndex++ ) );
-            config.setIdQuestionDate( daoUtil.getInt( nIndex++ ) );
-            config.setNbDaysToDate( daoUtil.getInt( nIndex++ ) );
-            config.setIdRetrievalType( daoUtil.getInt( nIndex++ ) );
+            daoUtil.setInt( 1, nIdTask );
+            daoUtil.executeQuery( );
+    
+            if ( daoUtil.next( ) )
+            {
+                int nIndex = 01;
+                config = new TaskAlertConfig( );
+                config.setIdTask( daoUtil.getInt( ++nIndex ) );
+                config.setIdForm( daoUtil.getInt( ++nIndex ) );
+                config.setIdStateAfterDeadline( daoUtil.getInt( ++nIndex ) );
+                config.setIdQuestionDate( daoUtil.getInt( ++nIndex ) );
+                config.setNbDaysToDate( daoUtil.getInt( ++nIndex ) );
+                config.setIdRetrievalType( daoUtil.getInt( ++nIndex ) );
+            }
         }
-
-        daoUtil.free( );
-
         return config;
     }
 
@@ -131,10 +127,10 @@ public class TaskAlertConfigDAO implements ITaskConfigDAO<TaskAlertConfig>
     @Override
     public void delete( int nIdTask )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, AlertPlugin.getPlugin( ) );
-
-        daoUtil.setInt( 1, nIdTask );
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, AlertPlugin.getPlugin( ) ) )
+        {
+            daoUtil.setInt( 1, nIdTask );
+            daoUtil.executeUpdate( );
+        }
     }
 }

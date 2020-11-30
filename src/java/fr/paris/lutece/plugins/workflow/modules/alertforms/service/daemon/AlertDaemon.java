@@ -72,32 +72,31 @@ public class AlertDaemon extends Daemon
             TaskAlertConfig config = configService.findByPrimaryKey( alert.getIdTask( ) );
 
             Locale locale = I18nService.getDefaultLocale( );
-
-            if ( formResponse != null && config != null )
-            {
-                if ( alertService.isFormResponseStateValid( config, formResponse, locale ) )
-                {
-                    Long lDate = alert.getDateReference( ).getTime( );
-                    LocalDateTime ldtDate = LocalDateTime.ofInstant( Instant.ofEpochMilli( lDate ), TimeZone.getDefault( ).toZoneId( ) );
-
-                    if ( ldtDate != null )
-                    {
-
-                        LocalDateTime ldtDateAfterAlarm = ldtDate.plusDays( config.getNbDaysToDate( ) );
-                        LocalDateTime ldtNow = LocalDateTime.now( );
-                        if ( ldtNow.isAfter( ldtDateAfterAlarm ) )
-                        {
-                            sbLog.append( "\n-Running alert (ID formresponse : " + formResponse.getId( ) + ", ID history : " + alert.getIdResourceHistory( )
-                                    + ", ID task : " + alert.getIdTask( ) + ")" );
-                            alertService.doChangeFormResponseState( config, formResponse.getId( ), alert );
-                        }
-                    }
-                }
-            }
-            else
+            
+            if ( formResponse == null || config == null )
             {
                 // If the formresponse is null or the config is null, we remove the alert
                 alertService.desactivateByHistory( alert.getIdResourceHistory( ), alert.getIdTask( ), false );
+                continue;
+            }
+
+            if ( alertService.isFormResponseStateValid( config, formResponse, locale ) )
+            {
+                Long lDate = alert.getDateReference( ).getTime( );
+                LocalDateTime ldtDate = LocalDateTime.ofInstant( Instant.ofEpochMilli( lDate ), TimeZone.getDefault( ).toZoneId( ) );
+
+                if ( ldtDate != null )
+                {
+
+                    LocalDateTime ldtDateAfterAlarm = ldtDate.plusDays( config.getNbDaysToDate( ) );
+                    LocalDateTime ldtNow = LocalDateTime.now( );
+                    if ( ldtNow.isAfter( ldtDateAfterAlarm ) )
+                    {
+                        sbLog.append( "\n-Running alert (ID formresponse : " + formResponse.getId( ) + ", ID history : " + alert.getIdResourceHistory( )
+                                + ", ID task : " + alert.getIdTask( ) + ")" );
+                        alertService.doChangeFormResponseState( config, formResponse.getId( ), alert );
+                    }
+                }
             }
         }
 

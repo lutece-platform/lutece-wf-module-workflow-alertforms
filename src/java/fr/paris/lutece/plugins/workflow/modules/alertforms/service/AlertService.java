@@ -384,11 +384,11 @@ public final class AlertService implements IAlertService
 
                 // If the new state has automatic reflexive actions
                 WorkflowService.getInstance( ).doProcessAutomaticReflexiveActions( nIdFormResponse, FormResponse.RESOURCE_TYPE, state.getId( ),
-                        resourceWorkflow.getExternalParentId( ), locale );
+                        resourceWorkflow.getExternalParentId( ), locale, null );
 
                 // if new state has action automatic
                 WorkflowService.getInstance( ).executeActionAutomatic( nIdFormResponse, FormResponse.RESOURCE_TYPE, action.getWorkflow( ).getId( ),
-                        resourceWorkflow.getExternalParentId( ) );
+                        resourceWorkflow.getExternalParentId( ), null );
 
                 // Remove the Alert
                 desactivateByHistory( alert.getIdResourceHistory( ), alert.getIdTask( ), true );

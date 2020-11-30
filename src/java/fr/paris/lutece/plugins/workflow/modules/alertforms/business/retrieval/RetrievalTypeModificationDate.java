@@ -36,7 +36,7 @@ package fr.paris.lutece.plugins.workflow.modules.alertforms.business.retrieval;
 import fr.paris.lutece.plugins.forms.business.FormResponse;
 import fr.paris.lutece.plugins.workflow.modules.alertforms.business.TaskAlertConfig;
 
-import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 /**
  *
@@ -58,7 +58,7 @@ public class RetrievalTypeModificationDate extends AbstractRetrievalType
              * modification date before the execution of the action. Ex : We have a formresponse with - modification date : 14/12/2012 - execution date of the
              * task : 15/12/2012 The reference date should not be 14/12/2012 but 15/12/2012.
              */
-            return GregorianCalendar.getInstance( ).getTimeInMillis( );
+            return Calendar.getInstance( ).getTimeInMillis( );
         }
 
         return null;

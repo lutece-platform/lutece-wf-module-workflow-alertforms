@@ -54,6 +54,7 @@ public class AlertConfigValidator implements ConstraintValidator<AlertConfig, Ta
     @Override
     public void initialize( AlertConfig constraintAnnotation )
     {
+        // Nothing to init
     }
 
     /**

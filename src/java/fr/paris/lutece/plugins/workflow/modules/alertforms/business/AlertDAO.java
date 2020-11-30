@@ -62,18 +62,18 @@ public class AlertDAO implements IAlertDAO
     @Override
     public synchronized void insert( Alert alertValue, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
-
-        int nIndex = 1;
-
-        daoUtil.setInt( nIndex++, alertValue.getIdResourceHistory( ) );
-        daoUtil.setInt( nIndex++, alertValue.getIdTask( ) );
-        daoUtil.setTimestamp( nIndex++, alertValue.getDateReference( ) );
-        daoUtil.setBoolean( nIndex++, true );
-        daoUtil.setBoolean( nIndex++, false );
-
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin ) )
+        {
+            int nIndex = 0;
+    
+            daoUtil.setInt( ++nIndex, alertValue.getIdResourceHistory( ) );
+            daoUtil.setInt( ++nIndex, alertValue.getIdTask( ) );
+            daoUtil.setTimestamp( ++nIndex, alertValue.getDateReference( ) );
+            daoUtil.setBoolean( ++nIndex, true );
+            daoUtil.setBoolean( ++nIndex, false );
+    
+            daoUtil.executeUpdate( );
+        }
     }
 
     /**
@@ -83,26 +83,25 @@ public class AlertDAO implements IAlertDAO
     public Alert load( int nIdResourceHistory, int nIdTask, Plugin plugin )
     {
         Alert alert = null;
-
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_PRIMARY_KEY, plugin );
-        int nIndex = 1;
-        daoUtil.setInt( nIndex++, nIdResourceHistory );
-        daoUtil.setInt( nIndex++, nIdTask );
-
-        daoUtil.executeQuery( );
-
-        if ( daoUtil.next( ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_PRIMARY_KEY, plugin ) )
         {
-            nIndex = 1;
-            alert = new Alert( );
-            alert.setIdResourceHistory( daoUtil.getInt( nIndex++ ) );
-            alert.setIdTask( daoUtil.getInt( nIndex++ ) );
-            alert.setDateReference( daoUtil.getTimestamp( nIndex++ ) );
-            alert.setActive( daoUtil.getBoolean( nIndex++ ) );
-            alert.setExecuted( daoUtil.getBoolean( nIndex++ ) );
+            int nIndex = 0;
+            daoUtil.setInt( ++nIndex, nIdResourceHistory );
+            daoUtil.setInt( ++nIndex, nIdTask );
+    
+            daoUtil.executeQuery( );
+    
+            if ( daoUtil.next( ) )
+            {
+                nIndex = 0;
+                alert = new Alert( );
+                alert.setIdResourceHistory( daoUtil.getInt( ++nIndex ) );
+                alert.setIdTask( daoUtil.getInt( ++nIndex ) );
+                alert.setDateReference( daoUtil.getTimestamp( ++nIndex ) );
+                alert.setActive( daoUtil.getBoolean( ++nIndex ) );
+                alert.setExecuted( daoUtil.getBoolean( ++nIndex ) );
+            }
         }
-
-        daoUtil.free( );
 
         return alert;
     }
@@ -113,14 +112,15 @@ public class AlertDAO implements IAlertDAO
     @Override
     public void desactivateByHistory( int nIdResourceHistory, int nIdTask, boolean executed, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DESACTIVATE_BY_HISTORY, plugin );
-        int nIndex = 1;
-        daoUtil.setBoolean( nIndex++, executed );
-        daoUtil.setInt( nIndex++, nIdResourceHistory );
-        daoUtil.setInt( nIndex, nIdTask );
-
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DESACTIVATE_BY_HISTORY, plugin ) )
+        {
+            int nIndex = 1;
+            daoUtil.setBoolean( nIndex++, executed );
+            daoUtil.setInt( nIndex++, nIdResourceHistory );
+            daoUtil.setInt( nIndex, nIdTask );
+    
+            daoUtil.executeUpdate( );
+        }
     }
 
     /**
@@ -129,10 +129,11 @@ public class AlertDAO implements IAlertDAO
     @Override
     public void desactivateByTask( int nIdTask, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DESACTIVATE_BY_TASK, plugin );
-        daoUtil.setInt( 1, nIdTask );
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DESACTIVATE_BY_TASK, plugin ) )
+        {
+            daoUtil.setInt( 1, nIdTask );
+            daoUtil.executeUpdate( );
+        }
     }
 
     /**
@@ -141,26 +142,23 @@ public class AlertDAO implements IAlertDAO
     @Override
     public List<Alert> selectAllActive( Plugin plugin )
     {
-        List<Alert> listAlerts = new ArrayList<Alert>( );
+        List<Alert> listAlerts = new ArrayList<>( );
 
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ALL + SQL_FILTER_ACTIVE, plugin );
-
-        daoUtil.executeQuery( );
-
-        while ( daoUtil.next( ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ALL + SQL_FILTER_ACTIVE, plugin ) )
         {
-            int nIndex = 1;
-            Alert alert = new Alert( );
-            alert.setIdResourceHistory( daoUtil.getInt( nIndex++ ) );
-            alert.setIdTask( daoUtil.getInt( nIndex++ ) );
-            alert.setDateReference( daoUtil.getTimestamp( nIndex++ ) );
-            alert.setActive( daoUtil.getBoolean( nIndex++ ) );
-            alert.setExecuted( daoUtil.getBoolean( nIndex++ ) );
-            listAlerts.add( alert );
+            daoUtil.executeQuery( );
+            while ( daoUtil.next( ) )
+            {
+                int nIndex = 1;
+                Alert alert = new Alert( );
+                alert.setIdResourceHistory( daoUtil.getInt( nIndex++ ) );
+                alert.setIdTask( daoUtil.getInt( nIndex++ ) );
+                alert.setDateReference( daoUtil.getTimestamp( nIndex++ ) );
+                alert.setActive( daoUtil.getBoolean( nIndex++ ) );
+                alert.setExecuted( daoUtil.getBoolean( nIndex++ ) );
+                listAlerts.add( alert );
+            }
         }
-
-        daoUtil.free( );
-
         return listAlerts;
     }
 

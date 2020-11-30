@@ -37,7 +37,6 @@ import fr.paris.lutece.plugins.forms.business.FormResponse;
 import fr.paris.lutece.plugins.forms.business.Question;
 import fr.paris.lutece.plugins.workflow.modules.alertforms.business.Alert;
 import fr.paris.lutece.plugins.workflow.modules.alertforms.business.TaskAlertConfig;
-import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.ReferenceList;
 
 import java.util.List;
