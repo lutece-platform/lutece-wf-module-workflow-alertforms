@@ -3,11 +3,11 @@
 <#if alert_active>
     #i18n{module.workflow.alertforms.task.alertTaskHistory.information.in} <b>${days_between!''} #i18n{module.workflow.alertforms.task.alertTaskHistory.information.days}</b><br/>
     #i18n{module.workflow.alertforms.task.alertTaskHistory.information.resourceWillChangeState} : <br/>
-    ${state_before.name!''} <i class="fa fa-arrow-right" aria-hidden="true"></i> ${state_after.name!''}
+    ${state_before.name!''} <@icon style='arrow-right' /> ${state_after.name!''}
 <#else>
 	<#if alert_executed>
     	#i18n{module.workflow.alertforms.task.alertTaskHistory.information.resourceHasChangedState} ( #i18n{module.workflow.alertforms.task.alertTaskHistory.information.afterAnAlarm} ${nb_days_alert?abs!''} #i18n{module.workflow.alertforms.task.alertTaskHistory.information.days} ) : <br/>
-    	${state_before.name!''} <i class="fa fa-arrow-right" aria-hidden="true"></i> ${state_after.name!''}
+    	${state_before.name!''} <@icon style='arrow-right' /> ${state_after.name!''}
     <#else>
     	 #i18n{module.workflow.alertforms.task.alertTaskHistory.information.resourceNotChangedState}
     </#if>
