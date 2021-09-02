@@ -148,4 +148,10 @@ public class TaskAlert extends SimpleTask
     {
         _taskAlertConfigService.remove( getId( ) );
     }
+    
+    @Override
+    public void doRemoveTaskInformation( int nIdHistory )
+    {
+        _alertService.deleteByHistory( nIdHistory, getId( ) );
+    }
 }

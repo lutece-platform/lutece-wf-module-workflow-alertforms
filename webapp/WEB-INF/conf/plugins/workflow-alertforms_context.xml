@@ -48,11 +48,4 @@
 	<bean id="workflow-alertforms.alertTaskComponent" class="fr.paris.lutece.plugins.workflow.modules.alertforms.web.AlertTaskComponent" 
 		p:taskType-ref="workflow-alertforms.taskTypeAlert"
 		p:taskConfigService-ref="workflow-alertforms.taskAlertConfigService" />
-
-    <!-- Archivers -->
-    <bean id="workflow-alertforms.alertFormsResourceArchiver"
-        class="fr.paris.lutece.plugins.workflow.modules.alertforms.service.archiver.AlertFormsResourceArchiver" />
-    <bean id="workflow-alertforms.alertFormsDeleteArchiveProcessingService"
-        class="fr.paris.lutece.plugins.workflow.modules.alertforms.service.archiver.AlertFormsDeleteArchiveProcessingService" />
-
 </beans>
