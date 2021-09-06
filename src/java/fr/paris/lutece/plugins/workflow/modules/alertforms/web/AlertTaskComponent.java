@@ -48,8 +48,7 @@ import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 import java.time.LocalDateTime;
-import java.time.Period;
-
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -122,8 +121,7 @@ public class AlertTaskComponent extends NoFormTaskComponent
         LocalDateTime ldtRefAlert = ldtRef.plusDays( alertConfig.getNbDaysToDate( ) );
         LocalDateTime ldtNow = LocalDateTime.now( );
 
-        Period period = Period.between( ldtNow.toLocalDate( ), ldtRefAlert.toLocalDate( ) );
-        model.put( AlertConstants.MARK_DAYS_BETWEEN, period.getDays( ) );
+        model.put( AlertConstants.MARK_DAYS_BETWEEN, ChronoUnit.DAYS.between( ldtNow.toLocalDate( ), ldtRefAlert.toLocalDate( ) ) );
         model.put( AlertConstants.MARK_ALERT_ACTIVE, alert.isActive( ) );
         model.put( AlertConstants.MARK_ALERT_EXECUTED, alert.isExecuted( ) );
 
