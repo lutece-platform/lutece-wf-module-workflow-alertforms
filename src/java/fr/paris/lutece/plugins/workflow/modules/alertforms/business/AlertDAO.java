@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -65,13 +65,13 @@ public class AlertDAO implements IAlertDAO
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin ) )
         {
             int nIndex = 0;
-    
+
             daoUtil.setInt( ++nIndex, alertValue.getIdResourceHistory( ) );
             daoUtil.setInt( ++nIndex, alertValue.getIdTask( ) );
             daoUtil.setTimestamp( ++nIndex, alertValue.getDateReference( ) );
             daoUtil.setBoolean( ++nIndex, true );
             daoUtil.setBoolean( ++nIndex, false );
-    
+
             daoUtil.executeUpdate( );
         }
     }
@@ -88,9 +88,9 @@ public class AlertDAO implements IAlertDAO
             int nIndex = 0;
             daoUtil.setInt( ++nIndex, nIdResourceHistory );
             daoUtil.setInt( ++nIndex, nIdTask );
-    
+
             daoUtil.executeQuery( );
-    
+
             if ( daoUtil.next( ) )
             {
                 nIndex = 0;
@@ -118,7 +118,7 @@ public class AlertDAO implements IAlertDAO
             daoUtil.setBoolean( nIndex++, executed );
             daoUtil.setInt( nIndex++, nIdResourceHistory );
             daoUtil.setInt( nIndex, nIdTask );
-    
+
             daoUtil.executeUpdate( );
         }
     }

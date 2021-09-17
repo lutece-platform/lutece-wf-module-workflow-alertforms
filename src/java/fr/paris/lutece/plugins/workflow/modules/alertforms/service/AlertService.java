@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -329,14 +329,16 @@ public final class AlertService implements IAlertService
 
         if ( config != null )
         {
-            List<FormQuestionResponse> listFormQuestionResponses = FormQuestionResponseHome.findFormQuestionResponseByResponseQuestion( nIdFormResponse, config.getIdQuestionDate( ) );
+            List<FormQuestionResponse> listFormQuestionResponses = FormQuestionResponseHome.findFormQuestionResponseByResponseQuestion( nIdFormResponse,
+                    config.getIdQuestionDate( ) );
             if ( CollectionUtils.isNotEmpty( listFormQuestionResponses ) )
             {
                 FormQuestionResponse formQuestionResponse = listFormQuestionResponses.get( 0 );
-    
+
                 String strDate = formQuestionResponse.getEntryResponse( ).get( 0 ).getResponseValue( );
-    
-                SimpleDateFormat formatter = new SimpleDateFormat( AppPropertiesService.getProperty( FormsConstants.PROPERTY_EXPORT_FORM_DATE_CREATION_FORMAT ) );
+
+                SimpleDateFormat formatter = new SimpleDateFormat(
+                        AppPropertiesService.getProperty( FormsConstants.PROPERTY_EXPORT_FORM_DATE_CREATION_FORMAT ) );
                 try
                 {
                     Date dDate = formatter.parse( strDate );

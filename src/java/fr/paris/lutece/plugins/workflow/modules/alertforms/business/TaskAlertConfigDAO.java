@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -61,14 +61,14 @@ public class TaskAlertConfigDAO implements ITaskConfigDAO<TaskAlertConfig>
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, AlertPlugin.getPlugin( ) ) )
         {
             int nIndex = 0;
-    
+
             daoUtil.setInt( ++nIndex, config.getIdTask( ) );
             daoUtil.setInt( ++nIndex, config.getIdForm( ) );
             daoUtil.setInt( ++nIndex, config.getIdStateAfterDeadline( ) );
             daoUtil.setInt( ++nIndex, config.getIdQuestionDate( ) );
             daoUtil.setInt( ++nIndex, config.getNbDaysToDate( ) );
             daoUtil.setInt( ++nIndex, config.getIdRetrievalType( ) );
-    
+
             daoUtil.executeUpdate( );
         }
     }
@@ -82,13 +82,13 @@ public class TaskAlertConfigDAO implements ITaskConfigDAO<TaskAlertConfig>
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, AlertPlugin.getPlugin( ) ) )
         {
             int nIndex = 0;
-    
+
             daoUtil.setInt( ++nIndex, config.getIdForm( ) );
             daoUtil.setInt( ++nIndex, config.getIdStateAfterDeadline( ) );
             daoUtil.setInt( ++nIndex, config.getIdQuestionDate( ) );
             daoUtil.setInt( ++nIndex, config.getNbDaysToDate( ) );
             daoUtil.setInt( ++nIndex, config.getIdRetrievalType( ) );
-    
+
             daoUtil.setInt( ++nIndex, config.getIdTask( ) );
             daoUtil.executeUpdate( );
         }
@@ -105,7 +105,7 @@ public class TaskAlertConfigDAO implements ITaskConfigDAO<TaskAlertConfig>
         {
             daoUtil.setInt( 1, nIdTask );
             daoUtil.executeQuery( );
-    
+
             if ( daoUtil.next( ) )
             {
                 int nIndex = 01;
