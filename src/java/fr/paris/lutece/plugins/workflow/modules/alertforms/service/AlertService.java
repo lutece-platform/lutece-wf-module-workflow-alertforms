@@ -74,6 +74,8 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -327,20 +329,23 @@ public final class AlertService implements IAlertService
 
         if ( config != null )
         {
-            FormQuestionResponse formQuestionResponse = FormQuestionResponseHome
-                    .findFormQuestionResponseByResponseQuestion( nIdFormResponse, config.getIdQuestionDate( ) ).get( 0 );
-
-            String strDate = formQuestionResponse.getEntryResponse( ).get( 0 ).getResponseValue( );
-
-            SimpleDateFormat formatter = new SimpleDateFormat( AppPropertiesService.getProperty( FormsConstants.PROPERTY_EXPORT_FORM_DATE_CREATION_FORMAT ) );
-            try
+            List<FormQuestionResponse> listFormQuestionResponses = FormQuestionResponseHome.findFormQuestionResponseByResponseQuestion( nIdFormResponse, config.getIdQuestionDate( ) );
+            if ( CollectionUtils.isNotEmpty( listFormQuestionResponses ) )
             {
-                Date dDate = formatter.parse( strDate );
-                return dDate.getTime( );
-            }
-            catch( ParseException e )
-            {
-                AppLogService.error( "Unable to parse given date", e );
+                FormQuestionResponse formQuestionResponse = listFormQuestionResponses.get( 0 );
+    
+                String strDate = formQuestionResponse.getEntryResponse( ).get( 0 ).getResponseValue( );
+    
+                SimpleDateFormat formatter = new SimpleDateFormat( AppPropertiesService.getProperty( FormsConstants.PROPERTY_EXPORT_FORM_DATE_CREATION_FORMAT ) );
+                try
+                {
+                    Date dDate = formatter.parse( strDate );
+                    return dDate.getTime( );
+                }
+                catch( ParseException e )
+                {
+                    AppLogService.error( "Unable to parse given date", e );
+                }
             }
         }
 
