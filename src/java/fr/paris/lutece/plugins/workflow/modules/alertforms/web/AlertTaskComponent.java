@@ -130,13 +130,4 @@ public class AlertTaskComponent extends NoFormTaskComponent
         return AppTemplateService.getTemplate( TEMPLATE_TASK_ALERT_HISTORY, locale, model ).getHtml( );
 
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getTaskInformationXml( int nIdHistory, HttpServletRequest request, Locale locale, ITask task )
-    {
-        return null;
-    }
 }
