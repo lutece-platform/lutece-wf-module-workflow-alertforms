@@ -108,7 +108,7 @@ public class TaskAlertConfigDAO implements ITaskConfigDAO<TaskAlertConfig>
 
             if ( daoUtil.next( ) )
             {
-                int nIndex = 01;
+                int nIndex = 0;
                 config = new TaskAlertConfig( );
                 config.setIdTask( daoUtil.getInt( ++nIndex ) );
                 config.setIdForm( daoUtil.getInt( ++nIndex ) );
