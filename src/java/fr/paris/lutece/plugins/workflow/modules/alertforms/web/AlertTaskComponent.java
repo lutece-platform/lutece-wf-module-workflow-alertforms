@@ -50,8 +50,10 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -110,11 +112,14 @@ public class AlertTaskComponent extends NoFormTaskComponent
         TaskAlertConfig alertConfig = _taskAlertConfigService.findByPrimaryKey( task.getId( ) );
         ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdHistory );
 
-        State stateBefore = _stateService.findByPrimaryKey( resourceHistory.getAction( ).getStateBefore( ).getId( ) );
         State stateAfter = _stateService.findByPrimaryKey( alertConfig.getIdStateAfterDeadline( ) );
+        List<State> stateBeforeList = resourceHistory.getAction().getListIdStateBefore()
+                .stream()
+                .map(id -> _stateService.findByPrimaryKey(id))
+                .collect(Collectors.toList());
 
         Map<String, Object> model = new HashMap<>( );
-        model.put( AlertConstants.MARK_STATE_BEFORE, stateBefore );
+        model.put( AlertConstants.MARK_STATE_BEFORE, stateBeforeList );
         model.put( AlertConstants.MARK_STATE_AFTER, stateAfter );
 
         LocalDateTime ldtRef = alert.getDateReference( ).toLocalDateTime( );
