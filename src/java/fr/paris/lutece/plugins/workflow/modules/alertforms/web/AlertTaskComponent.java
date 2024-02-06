@@ -110,12 +110,12 @@ public class AlertTaskComponent extends NoFormTaskComponent
         TaskAlertConfig alertConfig = _taskAlertConfigService.findByPrimaryKey( task.getId( ) );
         ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdHistory );
 
-        State stateBefore = _stateService.findByPrimaryKey( resourceHistory.getAction( ).getStateBefore( ).getId( ) );
-        State stateAfter = _stateService.findByPrimaryKey( alertConfig.getIdStateAfterDeadline( ) );
+/*        State stateBefore = _stateService.findByPrimaryKey( resourceHistory.getAction( ).getStateBefore( ).getId( ) );
+        State stateAfter = _stateService.findByPrimaryKey( alertConfig.getIdStateAfterDeadline( ) );*/
 
         Map<String, Object> model = new HashMap<>( );
-        model.put( AlertConstants.MARK_STATE_BEFORE, stateBefore );
-        model.put( AlertConstants.MARK_STATE_AFTER, stateAfter );
+/*        model.put( AlertConstants.MARK_STATE_BEFORE, stateBefore );
+        model.put( AlertConstants.MARK_STATE_AFTER, stateAfter );*/
 
         LocalDateTime ldtRef = alert.getDateReference( ).toLocalDateTime( );
         LocalDateTime ldtRefAlert = ldtRef.plusDays( alertConfig.getNbDaysToDate( ) );
