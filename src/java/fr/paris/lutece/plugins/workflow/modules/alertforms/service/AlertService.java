@@ -336,17 +336,13 @@ public final class AlertService implements IAlertService
                 FormQuestionResponse formQuestionResponse = listFormQuestionResponses.get( 0 );
 
                 String strDate = formQuestionResponse.getEntryResponse( ).get( 0 ).getResponseValue( );
-
-                SimpleDateFormat formatter = new SimpleDateFormat(
-                        AppPropertiesService.getProperty( FormsConstants.PROPERTY_EXPORT_FORM_DATE_CREATION_FORMAT ) );
-                try
-                {
-                    Date dDate = formatter.parse( strDate );
-                    return dDate.getTime( );
-                }
-                catch( ParseException e )
-                {
-                    AppLogService.error( "Unable to parse given date", e );
+  /*              For the correct execution of the task alert,
+                 the date passed as a parameter must be greater than or equal to today's date*/
+                if (strDate != null){
+                    Date dDate = new Date(Long.parseLong(strDate));
+                    if (dDate.compareTo(new Date()) >= 0) {
+                        return dDate.getTime( );
+                    }
                 }
             }
         }

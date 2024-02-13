@@ -103,11 +103,14 @@ public class TaskAlert extends SimpleTask
                     if ( alert == null )
                     {
                         Long lDate = config.getDate( formResponse );
-                        alert = new Alert( );
-                        alert.setIdResourceHistory( nIdResourceHistory );
-                        alert.setIdTask( getId( ) );
-                        alert.setDateReference( new Timestamp( lDate ) );
-                        _alertService.create( alert );
+                        /*If lDate is less than or equal to 0, it means the date is before today's date or null, so the task alert should not be executed*/
+                        if (lDate > 0) {
+                            alert = new Alert();
+                            alert.setIdResourceHistory(nIdResourceHistory);
+                            alert.setIdTask(getId());
+                            alert.setDateReference(new Timestamp(lDate));
+                            _alertService.create(alert);
+                        }
                     }
                 }
             }
