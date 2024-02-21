@@ -248,7 +248,10 @@ public final class AlertService implements IAlertService
         {
             int nIdEntryType = question.getEntry( ).getEntryType( ).getIdType( );
 
-            if ( isEntryTypeDateAccepted( nIdEntryType ) )
+            /*
+             * LUT-27425 If the date is set as optional in a form, then do not display this field when configuring an automatic alert task
+             * */
+            if ( isEntryTypeDateAccepted( nIdEntryType ) && question.getEntry().isMandatory() )
             {
                 refenreceListEntries.addItem( question.getId( ), buildReferenceEntryToString( question ) );
             }
