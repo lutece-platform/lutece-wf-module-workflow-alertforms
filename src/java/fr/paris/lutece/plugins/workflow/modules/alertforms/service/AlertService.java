@@ -340,14 +340,12 @@ public final class AlertService implements IAlertService
 
                 String strDate = formQuestionResponse.getEntryResponse( ).get( 0 ).getResponseValue( );
 
-                SimpleDateFormat formatter = new SimpleDateFormat(
-                        AppPropertiesService.getProperty( FormsConstants.PROPERTY_EXPORT_FORM_DATE_CREATION_FORMAT ) );
                 try
                 {
-                    Date dDate = formatter.parse( strDate );
+                    Date dDate = new Date(Long.parseLong(strDate));
                     return dDate.getTime( );
                 }
-                catch( ParseException e )
+                catch( Exception e )
                 {
                     AppLogService.error( "Unable to parse given date", e );
                 }
