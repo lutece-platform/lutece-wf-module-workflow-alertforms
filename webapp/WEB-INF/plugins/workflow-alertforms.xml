@@ -2,7 +2,7 @@
     <!-- Plugin Informations -->
     <name>workflow-alertforms</name>
     <class>fr.paris.lutece.plugins.workflow.modules.alertforms.service.AlertPlugin</class>
-    <version>2.1.2-SNAPSHOT</version>
+    <version>2.1.2</version>
     <documentation/>
     <installation/>
     <changes/>
