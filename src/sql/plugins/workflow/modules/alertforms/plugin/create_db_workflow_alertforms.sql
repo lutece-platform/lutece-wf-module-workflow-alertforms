@@ -1,3 +1,6 @@
+-- liquibase formatted sql
+-- changeset workflow-alertforms:create_db_workflow_alertforms.sql
+-- preconditions onFail:MARK_RAN onError:WARN
 --
 -- Table structure for table task_alert_cf
 --
@@ -19,7 +22,7 @@ DROP TABLE IF EXISTS task_alert;
 CREATE TABLE task_alert(
   id_history INT DEFAULT 0 NOT NULL,
   id_task INT DEFAULT 0 NOT NULL,
-  reference_date TIMESTAMP DEFAULT NULL NULL,
+  reference_date TIMESTAMP DEFAULT NULL,
   is_active SMALLINT DEFAULT 1 NOT NULL,
   is_executed SMALLINT DEFAULT 1 NOT NULL,
   PRIMARY KEY (id_history, id_task)
