@@ -88,7 +88,7 @@ import org.springframework.transaction.annotation.Transactional;
 public final class AlertService implements IAlertService
 {
     public static final String BEAN_SERVICE = "workflow-alertforms.alertService";
-    private List<Integer> _listAcceptedEntryTypesDate;
+    private List<String> _listAcceptedEntryTypesDate;
     @Inject
     private ITaskService _taskService;
     @Inject
@@ -173,13 +173,13 @@ public final class AlertService implements IAlertService
      * {@inheritDoc}
      */
     @Override
-    public boolean isEntryTypeDateAccepted( int nIdEntryType )
+    public boolean isEntryTypeDateAccepted( String strEntryTypeBeanName )
     {
         boolean bIsAccepted = false;
 
         if ( ( _listAcceptedEntryTypesDate != null ) && !_listAcceptedEntryTypesDate.isEmpty( ) )
         {
-            bIsAccepted = _listAcceptedEntryTypesDate.contains( nIdEntryType );
+            bIsAccepted = _listAcceptedEntryTypesDate.contains( strEntryTypeBeanName );
         }
 
         return bIsAccepted;
@@ -246,12 +246,12 @@ public final class AlertService implements IAlertService
 
         for ( Question question : getListQuestions( nIdTask ) )
         {
-            int nIdEntryType = question.getEntry( ).getEntryType( ).getIdType( );
+            String strEntryTypeBeanName = question.getEntry( ).getEntryType( ).getBeanName( );
 
             /*
              * LUT-27425 If the date is set as optional in a form, then do not display this field when configuring an automatic alert task
              * */
-            if ( isEntryTypeDateAccepted( nIdEntryType ) && question.getEntry().isMandatory() )
+            if ( isEntryTypeDateAccepted( strEntryTypeBeanName ) && question.getEntry().isMandatory() )
             {
                 refenreceListEntries.addItem( question.getId( ), buildReferenceEntryToString( question ) );
             }
@@ -433,11 +433,11 @@ public final class AlertService implements IAlertService
      * 
      * @param strPropertyEntryTypes
      *            the property containing the entry types
-     * @return a list of integer
+     * @return a list of String
      */
-    private static List<Integer> fillListEntryTypes( String strPropertyEntryTypes )
+    private static List<String> fillListEntryTypes( String strPropertyEntryTypes )
     {
-        List<Integer> listEntryTypes = new ArrayList<>( );
+        List<String> listEntryTypes = new ArrayList<>( );
         String strEntryTypes = AppPropertiesService.getProperty( strPropertyEntryTypes );
 
         if ( StringUtils.isNotBlank( strEntryTypes ) )
@@ -446,10 +446,9 @@ public final class AlertService implements IAlertService
 
             for ( String strAcceptEntryType : listAcceptEntryTypesForIdDemand )
             {
-                if ( StringUtils.isNotBlank( strAcceptEntryType ) && StringUtils.isNumeric( strAcceptEntryType ) )
+                if ( StringUtils.isNotBlank( strAcceptEntryType ) )
                 {
-                    int nAcceptedEntryType = Integer.parseInt( strAcceptEntryType );
-                    listEntryTypes.add( nAcceptedEntryType );
+                    listEntryTypes.add( strAcceptEntryType );
                 }
             }
         }
