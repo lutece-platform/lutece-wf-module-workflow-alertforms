@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
 	<properties>
-		<title>Plugin</title>
+		<title>Module workflow alertforms</title>
 	</properties>
 	<body>
-		<section name="Plugin">
+		<section name="Module workflow alertforms">
 			<subsection name="Introduction">
+				<p>Ce module workflow fournit un mécanisme d'alerte pour les réponses aux formulaires. 
+				Il crée et enregistre des entrées d'alerte en fonction d'une date extraite (ou calculée) d'une réponse au formulaire et, lorsque l'échéance est atteinte, le module modifie automatiquement l'état de la réponse. 
+				L'alerte est affichée dans l'historique de la réponse au formulaire.
+				</p>
+			</subsection>
+			<subsection name="Configuration">
+				<p>La configuration de la tâche définit le formulaire, la stratégie de récupération qui fournit la date de référence, le nombre de jours à ajouter ou à soustraire et l'état cible à appliquer après l'échéance.</p>
+				<p>Lorsque TaskAlert s'exécute pour une réponse de formulaire, il calcule la date de référence (à l'aide d'un type de récupération) et insère une ligne d'alerte si aucune n'existe pour cette réponse de formulaire.</p>
+				<p>Un démon périodique analyse les alertes actives, compare la date de référence + le nombre de jours configuré avec l'heure actuelle, puis déclenche l'action (transition d'état) et marque l'alerte comme exécutée.</p>
+				<p>Un autre démon effectue le nettoyage des alertes obsolètes.</p>
+				<p>Le système de récupération est extensible : de nouvelles implémentations de <code>IRetrievalType</code> peuvent être ajoutées en tant que beans Spring.</p>
+			</subsection>
+			<subsection name="Usage">
+				<p>Pour utiliser le module, installez-le dans votre instance Lutece. Configurez la tâche dans l'interface d'administration du workflow : choisissez le formulaire, le type de récupération, le nombre de jours et l'état cible.</p>
 			</subsection>
 		</section>
 	</body>
