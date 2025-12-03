@@ -96,13 +96,13 @@ public interface IAlertService
     // CHECKS
 
     /**
-     * Check if the given entry type id is accepted for the date
+     * Checks whether the bean name of the entry type is accepted for the date.
      * 
-     * @param nIdEntryType
-     *            the id entry type
+     * @param strEntryTypeBeanName
+     *            the bean name of the entry type
      * @return true if it is accepted, false otherwise
      */
-    boolean isEntryTypeDateAccepted( int nIdEntryType );
+    boolean isEntryTypeDateAccepted( String strEntryTypeBeanName );
 
     /**
      * Check if the formresponse has the same state before executing the action
