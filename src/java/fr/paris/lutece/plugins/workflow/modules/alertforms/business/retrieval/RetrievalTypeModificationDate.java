@@ -35,6 +35,10 @@ package fr.paris.lutece.plugins.workflow.modules.alertforms.business.retrieval;
 
 import fr.paris.lutece.plugins.forms.business.FormResponse;
 import fr.paris.lutece.plugins.workflow.modules.alertforms.business.TaskAlertConfig;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.util.Calendar;
 
@@ -43,8 +47,19 @@ import java.util.Calendar;
  * RetrievalTypeModificationDate
  *
  */
+@ApplicationScoped
+@Named( "workflow-alertforms.retrievalTypeModificationDate" )
 public class RetrievalTypeModificationDate extends AbstractRetrievalType
 {
+    @Inject
+    public RetrievalTypeModificationDate(
+            @ConfigProperty( name = "workflow-alertforms.retrievalTypeModificationDate.idType" ) int idType,
+            @ConfigProperty( name = "workflow-alertforms.retrievalTypeModificationDate.titleKey" ) String titleKey)
+    {
+        setIdType( idType );
+        setTitleKey( titleKey );
+    }
+
     /**
      * {@inheritDoc}
      */

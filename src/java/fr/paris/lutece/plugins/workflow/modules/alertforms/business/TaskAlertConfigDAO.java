@@ -36,12 +36,16 @@ package fr.paris.lutece.plugins.workflow.modules.alertforms.business;
 import fr.paris.lutece.plugins.workflow.modules.alertforms.service.AlertPlugin;
 import fr.paris.lutece.plugins.workflowcore.business.config.ITaskConfigDAO;
 import fr.paris.lutece.util.sql.DAOUtil;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
 
 /**
  *
  * TaskAlertConfigDAO
  *
  */
+@ApplicationScoped
+@Named( "workflow-alertforms.taskAlertConfigDAO" )
 public class TaskAlertConfigDAO implements ITaskConfigDAO<TaskAlertConfig>
 {
     private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = " SELECT id_task, id_form, id_state_after_deadline, id_question_date, nb_days_to_date, id_retrieval_type "
@@ -56,7 +60,7 @@ public class TaskAlertConfigDAO implements ITaskConfigDAO<TaskAlertConfig>
      * {@inheritDoc}
      */
     @Override
-    public synchronized void insert( TaskAlertConfig config )
+    public void insert( TaskAlertConfig config )
     {
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, AlertPlugin.getPlugin( ) ) )
         {

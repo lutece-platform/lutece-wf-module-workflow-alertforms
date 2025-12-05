@@ -35,6 +35,10 @@ package fr.paris.lutece.plugins.workflow.modules.alertforms.business.retrieval;
 
 import fr.paris.lutece.plugins.forms.business.FormResponse;
 import fr.paris.lutece.plugins.workflow.modules.alertforms.business.TaskAlertConfig;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.sql.Timestamp;
 
@@ -43,8 +47,19 @@ import java.sql.Timestamp;
  * RetrievalTypeCreationDate
  *
  */
+@ApplicationScoped
+@Named( "workflow-alertforms.retrievalTypeCreationDate" )
 public class RetrievalTypeCreationDate extends AbstractRetrievalType
 {
+    @Inject
+    public RetrievalTypeCreationDate(
+            @ConfigProperty( name = "workflow-alertforms.retrievalTypeCreationDate.idType" ) int idType,
+            @ConfigProperty( name = "workflow-alertforms.retrievalTypeCreationDate.titleKey" ) String titleKey)
+    {
+        setIdType( idType );
+        setTitleKey( titleKey );
+    }
+
     /**
      * {@inheritDoc}
      */

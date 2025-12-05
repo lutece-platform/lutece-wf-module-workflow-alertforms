@@ -39,8 +39,10 @@ import fr.paris.lutece.plugins.workflow.modules.alertforms.business.retrieval.Re
 import fr.paris.lutece.plugins.workflow.modules.alertforms.util.annotation.AlertConfig;
 import fr.paris.lutece.plugins.workflowcore.business.config.TaskConfig;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Named;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 /**
  *
@@ -48,6 +50,8 @@ import javax.validation.constraints.NotNull;
  *
  */
 @AlertConfig
+@Dependent
+@Named( "workflow-alertforms.taskAlertConfig" )
 public class TaskAlertConfig extends TaskConfig
 {
     @NotNull

@@ -42,10 +42,11 @@ import fr.paris.lutece.plugins.workflow.modules.alertforms.util.constants.AlertC
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.portal.service.daemon.Daemon;
 import fr.paris.lutece.portal.service.i18n.I18nService;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.util.Locale;
 
+import jakarta.enterprise.inject.literal.NamedLiteral;
+import jakarta.enterprise.inject.spi.CDI;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -61,8 +62,8 @@ public class AlertCleanerDaemon extends Daemon
     public void run( )
     {
         StringBuilder sbLog = new StringBuilder( );
-        ITaskConfigService configService = SpringContextService.getBean( AlertConstants.BEAN_ALERT_CONFIG_SERVICE );
-        IAlertService alertService = SpringContextService.getBean( AlertService.BEAN_SERVICE );
+        ITaskConfigService configService = CDI.current().select( ITaskConfigService.class, NamedLiteral.of( AlertConstants.BEAN_ALERT_CONFIG_SERVICE ) ).get( );
+        IAlertService alertService = CDI.current().select( IAlertService.class ).get( );
 
         for ( Alert alert : alertService.findAllActive( ) )
         {

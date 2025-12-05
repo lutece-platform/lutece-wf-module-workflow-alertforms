@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,59 +31,28 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.workflow.modules.alertforms.business.retrieval;
+package fr.paris.lutece.plugins.workflow.modules.alertforms.service.cdi;
 
-import fr.paris.lutece.plugins.forms.business.FormResponse;
-import fr.paris.lutece.plugins.forms.util.FormsConstants;
 import fr.paris.lutece.plugins.workflow.modules.alertforms.business.TaskAlertConfig;
-import fr.paris.lutece.plugins.workflow.modules.alertforms.service.IAlertService;
-
+import fr.paris.lutece.plugins.workflow.modules.alertforms.util.constants.AlertConstants;
+import fr.paris.lutece.plugins.workflowcore.business.config.ITaskConfigDAO;
+import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
+import fr.paris.lutece.plugins.workflowcore.service.config.TaskConfigService;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Named;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-/**
- *
- * RetrievalTypeFormEntry
- *
- */
 @ApplicationScoped
-@Named( "workflow-alertforms.retrievalTypeFormEntry" )
-public class RetrievalTypeFormEntry extends AbstractRetrievalType
+public class TaskConfigServiceProducer
 {
-    @Inject
-    private IAlertService _alertService;
-
-    @Inject
-    public RetrievalTypeFormEntry(
-            @ConfigProperty( name = "workflow-alertforms.retrievalTypeFormEntry.idType" ) int idType,
-            @ConfigProperty( name = "workflow-alertforms.retrievalTypeFormEntry.titleKey" ) String titleKey)
+    @Produces
+    @ApplicationScoped
+    @Named( AlertConstants.BEAN_ALERT_CONFIG_SERVICE )
+    public ITaskConfigService produceTaskAlertConfigService(
+            @Named( "workflow-alertforms.taskAlertConfigDAO" ) ITaskConfigDAO<TaskAlertConfig> alertTaskConfigDAO )
     {
-        setIdType( idType );
-        setTitleKey( titleKey );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getDate( TaskAlertConfig config, FormResponse formResponse )
-    {
-        if ( ( config != null ) && ( formResponse != null ) )
-        {
-            return _alertService.getDate( config, formResponse.getId( ), formResponse.getFormId( ) );
-        }
-
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean checkConfigData( TaskAlertConfig config )
-    {
-        return config.getIdQuestionDate( ) != FormsConstants.DEFAULT_ID_VALUE;
+        TaskConfigService taskService = new TaskConfigService( );
+        taskService.setTaskConfigDAO( (ITaskConfigDAO) alertTaskConfigDAO );
+        return taskService;
     }
 }

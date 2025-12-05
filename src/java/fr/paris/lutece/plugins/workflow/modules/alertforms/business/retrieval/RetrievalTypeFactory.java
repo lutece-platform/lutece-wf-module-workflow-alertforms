@@ -33,7 +33,7 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.alertforms.business.retrieval;
 
-import fr.paris.lutece.portal.service.spring.SpringContextService;
+import jakarta.enterprise.inject.spi.CDI;
 
 import java.util.List;
 
@@ -58,7 +58,7 @@ public final class RetrievalTypeFactory
      */
     public static List<IRetrievalType> getRetrievalTypes( )
     {
-        return SpringContextService.getBeansOfType( IRetrievalType.class );
+        return CDI.current( ).select( IRetrievalType.class ).stream().toList( );
     }
 
     /**

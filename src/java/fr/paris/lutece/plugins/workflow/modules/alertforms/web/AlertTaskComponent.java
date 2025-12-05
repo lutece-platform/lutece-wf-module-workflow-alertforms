@@ -41,6 +41,7 @@ import fr.paris.lutece.plugins.workflow.modules.alertforms.util.constants.AlertC
 import fr.paris.lutece.plugins.workflow.web.task.NoFormTaskComponent;
 import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
 import fr.paris.lutece.plugins.workflowcore.business.state.State;
+import fr.paris.lutece.plugins.workflowcore.business.task.ITaskType;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistoryService;
 import fr.paris.lutece.plugins.workflowcore.service.state.IStateService;
@@ -53,16 +54,19 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  *
  * AlertTaskComponent
  *
  */
+@ApplicationScoped
+@Named( "workflow-alertforms.alertTaskComponent" )
 public class AlertTaskComponent extends NoFormTaskComponent
 {
     private static final String TEMPLATE_TASK_ALERT_CONFIG = "admin/plugins/workflow/modules/alertforms/task_alert_config.html";
@@ -77,6 +81,13 @@ public class AlertTaskComponent extends NoFormTaskComponent
     @Inject
     private IResourceHistoryService _resourceHistoryService;
 
+    @Inject
+    public AlertTaskComponent( @Named( "workflow-alertforms.taskTypeAlert" ) ITaskType taskType,
+                               @Named( "workflow-alertforms.taskAlertConfigService" ) ITaskConfigService taskConfigService )
+    {
+        setTaskType( taskType );
+        setTaskConfigService( taskConfigService );
+    }
     /**
      * {@inheritDoc}
      */

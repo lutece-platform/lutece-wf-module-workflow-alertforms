@@ -45,7 +45,6 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 public class AlertPlugin extends PluginDefaultImplementation
 {
     public static final String PLUGIN_NAME = "workflow-alertforms";
-    public static final String BEAN_TRANSACTION_MANAGER = PLUGIN_NAME + ".transactionManager";
 
     /**
      * Get the plugin

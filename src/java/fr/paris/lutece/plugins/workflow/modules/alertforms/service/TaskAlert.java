@@ -48,22 +48,25 @@ import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistorySer
 import fr.paris.lutece.plugins.workflowcore.service.state.IStateService;
 import fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask;
 
+import jakarta.enterprise.context.Dependent;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Timestamp;
 
 import java.util.Locale;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  *
  * TaskAlert
  *
  */
+@Dependent
+@Named( "workflow-alertforms.taskAlert" )
 public class TaskAlert extends SimpleTask
 {
     // TEMPLATES

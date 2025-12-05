@@ -37,21 +37,17 @@ import java.sql.Timestamp;
 
 import fr.paris.lutece.plugins.workflow.modules.alertforms.service.AlertPlugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.test.LuteceTestCase;
+import jakarta.inject.Inject;
+import org.junit.jupiter.api.Test;
 
 public class AlertBusinessTest extends LuteceTestCase
 {
+    @Inject
     private IAlertDAO _dao;
 
-    @Override
-    protected void setUp( ) throws Exception
-    {
-        super.setUp( );
-        _dao = SpringContextService.getBean( AlertDAO.BEAN_NAME );
-    }
-
-    public void testCRUD( )
+    @Test
+    void testCRUD( )
     {
         Alert alert = new Alert( );
         alert.setActive( true );
