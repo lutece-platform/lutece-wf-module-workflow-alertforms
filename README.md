@@ -19,7 +19,7 @@ A periodic daemon scans active alerts, compares reference_date + configured numb
 
 Another daemon performs cleanup of obsolete alerts.
 
-The retrieval system is extensible: new `IRetrievalType` implementations can be registered as Spring beans.
+The retrieval system is extensible: new `IRetrievalType` implementations can be registered as CDI beans.
 
 ## Usage
 

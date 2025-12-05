@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,59 +31,30 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.workflow.modules.alertforms.business.retrieval;
+package fr.paris.lutece.plugins.workflow.modules.alertforms.service.cdi;
 
-import fr.paris.lutece.plugins.forms.business.FormResponse;
-import fr.paris.lutece.plugins.forms.util.FormsConstants;
-import fr.paris.lutece.plugins.workflow.modules.alertforms.business.TaskAlertConfig;
-import fr.paris.lutece.plugins.workflow.modules.alertforms.service.IAlertService;
-
+import fr.paris.lutece.plugins.workflow.business.task.TaskTypeBuilder;
+import fr.paris.lutece.plugins.workflowcore.business.task.ITaskType;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Named;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-/**
- *
- * RetrievalTypeFormEntry
- *
- */
 @ApplicationScoped
-@Named( "workflow-alertforms.retrievalTypeFormEntry" )
-public class RetrievalTypeFormEntry extends AbstractRetrievalType
+public class TaskTypeProducer
 {
-    @Inject
-    private IAlertService _alertService;
-
-    @Inject
-    public RetrievalTypeFormEntry(
-            @ConfigProperty( name = "workflow-alertforms.retrievalTypeFormEntry.idType" ) int idType,
-            @ConfigProperty( name = "workflow-alertforms.retrievalTypeFormEntry.titleKey" ) String titleKey)
+    @Produces
+    @ApplicationScoped
+    @Named( "workflow-alertforms.taskTypeAlert" )
+    public ITaskType produceAlertTypeTask(
+            @ConfigProperty( name = "workflow-alertforms.taskTypeAlert.key" ) String key,
+            @ConfigProperty( name = "workflow-alertforms.taskTypeAlert.titleI18nKey" ) String titleI18nKey,
+            @ConfigProperty( name = "workflow-alertforms.taskTypeAlert.beanName" ) String beanName,
+            @ConfigProperty( name = "workflow-alertforms.taskTypeAlert.configBeanName" ) String configBeanName,
+            @ConfigProperty( name = "workflow-alertforms.taskTypeAlert.configRequired", defaultValue = "false" ) boolean configRequired,
+            @ConfigProperty( name = "workflow-alertforms.taskTypeAlert.formTaskRequired", defaultValue = "false" ) boolean formTaskRequired,
+            @ConfigProperty( name = "workflow-alertforms.taskTypeAlert.taskForAutomaticAction", defaultValue = "false" ) boolean taskForAutomaticAction )
     {
-        setIdType( idType );
-        setTitleKey( titleKey );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getDate( TaskAlertConfig config, FormResponse formResponse )
-    {
-        if ( ( config != null ) && ( formResponse != null ) )
-        {
-            return _alertService.getDate( config, formResponse.getId( ), formResponse.getFormId( ) );
-        }
-
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean checkConfigData( TaskAlertConfig config )
-    {
-        return config.getIdQuestionDate( ) != FormsConstants.DEFAULT_ID_VALUE;
+        return TaskTypeBuilder.buildTaskType( key, titleI18nKey, beanName, configBeanName, configRequired, formTaskRequired, taskForAutomaticAction );
     }
 }

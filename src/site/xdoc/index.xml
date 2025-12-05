@@ -16,7 +16,7 @@
 				<p>When TaskAlert runs for a form reponse, it computes the reference date (using a retrieval type) and inserts an Alert row if none exists for that form response.</p>
 				<p>A periodic daemon scans active alerts, compares reference_date + configured number of days with the current time, then triggers the action (state transition) and marks the alert executed.</p>
 				<p>Another daemon performs cleanup of obsolete alerts. </p>
-				<p>The retrieval system is extensible: new <code>IRetrievalType</code> implementations can be registered as Spring beans.</p>
+				<p>The retrieval system is extensible: new <code>IRetrievalType</code> implementations can be registered as CDI beans.</p>
 			</subsection>
 			<subsection name="Usage">
 				<p>To use the module, install it into your Lutece instance. Configure the task in the workflow administration UI: choose the form, the retrieval type, the number of days, and the target state.</p>

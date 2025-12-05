@@ -38,8 +38,8 @@ import fr.paris.lutece.plugins.workflow.modules.alertforms.business.retrieval.IR
 import fr.paris.lutece.plugins.workflow.modules.alertforms.business.retrieval.RetrievalTypeFactory;
 import fr.paris.lutece.plugins.workflow.modules.alertforms.util.annotation.AlertConfig;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  *

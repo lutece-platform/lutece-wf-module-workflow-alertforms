@@ -35,6 +35,8 @@ package fr.paris.lutece.plugins.workflow.modules.alertforms.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,8 @@ import java.util.List;
  * AlertDAO
  *
  */
+@ApplicationScoped
+@Named( "workflow-alertforms.alertDAO" )
 public class AlertDAO implements IAlertDAO
 {
     public static final String BEAN_NAME = "workflow-alertforms.alertDAO";
@@ -60,7 +64,7 @@ public class AlertDAO implements IAlertDAO
      * {@inheritDoc}
      */
     @Override
-    public synchronized void insert( Alert alertValue, Plugin plugin )
+    public void insert( Alert alertValue, Plugin plugin )
     {
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin ) )
         {

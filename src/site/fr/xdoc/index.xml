@@ -16,7 +16,7 @@
 				<p>Lorsque TaskAlert s'exécute pour une réponse de formulaire, il calcule la date de référence (à l'aide d'un type de récupération) et insère une ligne d'alerte si aucune n'existe pour cette réponse de formulaire.</p>
 				<p>Un démon périodique analyse les alertes actives, compare la date de référence + le nombre de jours configuré avec l'heure actuelle, puis déclenche l'action (transition d'état) et marque l'alerte comme exécutée.</p>
 				<p>Un autre démon effectue le nettoyage des alertes obsolètes.</p>
-				<p>Le système de récupération est extensible : de nouvelles implémentations de <code>IRetrievalType</code> peuvent être ajoutées en tant que beans Spring.</p>
+				<p>Le système de récupération est extensible : de nouvelles implémentations de <code>IRetrievalType</code> peuvent être ajoutées en tant que beans CDI.</p>
 			</subsection>
 			<subsection name="Usage">
 				<p>Pour utiliser le module, installez-le dans votre instance Lutece. Configurez la tâche dans l'interface d'administration du workflow : choisissez le formulaire, le type de récupération, le nombre de jours et l'état cible.</p>

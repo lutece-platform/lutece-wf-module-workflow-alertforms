@@ -64,30 +64,28 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.util.ReferenceList;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
  * AlertService
  * 
  */
-public final class AlertService implements IAlertService
+@ApplicationScoped
+public class AlertService implements IAlertService
 {
-    public static final String BEAN_SERVICE = "workflow-alertforms.alertService";
     private List<String> _listAcceptedEntryTypesDate;
     @Inject
     private ITaskService _taskService;
@@ -104,11 +102,10 @@ public final class AlertService implements IAlertService
     private ITaskConfigService _taskAlertConfigService;
     @Inject
     private IAlertDAO _alertDAO;
+    @Inject
+    private WorkflowService _workfkowService;
 
-    /**
-     * Private constructor
-     */
-    private AlertService( )
+    AlertService( )
     {
         // Init list accepted entry types for date
         _listAcceptedEntryTypesDate = fillListEntryTypes( AlertConstants.PROPERTY_ACCEPTED_FORM_ENTRY_TYPES_DATE );
@@ -120,7 +117,7 @@ public final class AlertService implements IAlertService
      * {@inheritDoc}
      */
     @Override
-    @Transactional( AlertPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void create( Alert alert )
     {
         if ( alert != null )
@@ -133,7 +130,7 @@ public final class AlertService implements IAlertService
      * {@inheritDoc}
      */
     @Override
-    @Transactional( AlertPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void desactivateByHistory( int nIdResourceHistory, int nIdTask, boolean executed )
     {
         _alertDAO.desactivateByHistory( nIdResourceHistory, nIdTask, executed, PluginService.getPlugin( AlertPlugin.PLUGIN_NAME ) );
@@ -143,7 +140,7 @@ public final class AlertService implements IAlertService
      * {@inheritDoc}
      */
     @Override
-    @Transactional( AlertPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void desactivateByTask( int nIdTask )
     {
         _alertDAO.desactivateByTask( nIdTask, PluginService.getPlugin( AlertPlugin.PLUGIN_NAME ) );
@@ -391,11 +388,11 @@ public final class AlertService implements IAlertService
                 _resourceWorkflowService.update( resourceWorkflow );
 
                 // If the new state has automatic reflexive actions
-                WorkflowService.getInstance( ).doProcessAutomaticReflexiveActions( nIdFormResponse, FormResponse.RESOURCE_TYPE, state.getId( ),
+                _workfkowService.doProcessAutomaticReflexiveActions( nIdFormResponse, FormResponse.RESOURCE_TYPE, state.getId( ),
                         resourceWorkflow.getExternalParentId( ), locale, null );
 
                 // if new state has action automatic
-                WorkflowService.getInstance( ).executeActionAutomatic( nIdFormResponse, FormResponse.RESOURCE_TYPE, action.getWorkflow( ).getId( ),
+                _workfkowService.executeActionAutomatic( nIdFormResponse, FormResponse.RESOURCE_TYPE, action.getWorkflow( ).getId( ),
                         resourceWorkflow.getExternalParentId( ), null );
 
                 // Remove the Alert
@@ -409,10 +406,8 @@ public final class AlertService implements IAlertService
     /**
      * Build the reference entry into String
      * 
-     * @param entry
-     *            the entry
-     * @param locale
-     *            the Locale
+     * @param question
+     *            the question
      * @return the reference entry
      */
     private String buildReferenceEntryToString( Question question )
